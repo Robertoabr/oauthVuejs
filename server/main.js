@@ -36,11 +36,11 @@ app.use(
   })
 );
 
-// app.use(
-//   cors({
-//     origin: 'http://localhost:8080'
-//   })
-// );
+app.use(
+  cors({
+    origin: 'http://localhost:8080'
+  })
+);
 
 // adding oAuth middleware (you need to start up passport after session but before the routes)
 app.use(passport.initialize());
@@ -66,7 +66,7 @@ passport.use(
     },
     // Google will send back the token and profile
     async (token, refreshToken, profile, done) => {
-      //logging to make sure this is working each time
+      //logging to make sure this is working each time -and so you can see profile obj
       console.log('---', 'in verification callback', profile, '---');
 
       // the callback will pass back user profile information and each service (Facebook, Twitter, and Google) will pass it back differently. Passport standardizes the output profile object.
@@ -76,7 +76,7 @@ passport.use(
         imageUrl: profile.photos ? profile.photos[0].value : undefined
       };
 
-      // here I am querying the model with the returned data from google to see if the user exists - you need to import your user model to this file and correct the syntax below to suit your ORM and call done with the right info(http://www.passportjs.org/docs/configure/
+      // here I am querying the model with the returned data from google to see if the user exists - you need to import your user model to this file and correct the syntax below to suit your ORM and call done() with the right info vs my testing below(http://www.passportjs.org/docs/configure/
       // try {
       //   let [user, bool] = await User.findOrCreate({
       //     where: { googleId: profile.id },
@@ -124,11 +124,11 @@ app.get('/just_redirect', (req, res) => {
 
 app.use('/', routes);
 
-// app.use(
-//   bodyParser.urlencoded({
-//     extended: true
-//   })
-// );
+app.use(
+  bodyParser.urlencoded({
+    extended: true
+  })
+);
 
 // Added Error handling endware (just to make sure I didn't miss anything)
 app.use((err, req, res, next) => {
