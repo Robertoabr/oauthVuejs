@@ -12,10 +12,13 @@
   "dependencies": {
     "cors": "^2.8.5",
     "express": "^4.17.1",
+    "express-session": "^1.16.2",
     "knex": "^0.19.3",
+    "morgan": "^1.9.1",
     "nodemon": "^1.19.2",
     "objection": "^1.6.9",
     "passport": "^0.4.0",
+    "passport-google-oauth": "^2.0.0",
     "passport-oauth2": "^1.5.0",
     "pg": "^7.12.1"
   }
