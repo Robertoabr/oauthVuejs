@@ -9,7 +9,6 @@ const { Model } = require('objection');
 const cors = require('cors');
 const routes = require('express').Router();
 const passport = require('passport');
-const OAuth2Strategy = require('passport-oauth2');
 const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 const bodyParser = require('body-parser');
 const secrets = require('./config/secrets.json');
@@ -83,9 +82,9 @@ passport.use(
       //     where: { googleId: profile.id },
       //     defaults: info
       //   });
-      //   done(null, user);
+      done(null, { id: 2, email: 'ffff@aol.com' }); //   done(null, user);
       // } catch (error) {
-      done();
+      // done();
       // }
     }
   )
@@ -102,6 +101,22 @@ app.get(
     failureRedirect: 'http://localhost:8080/login' // or wherever
   })
 );
+
+//linking a token from google to passport session
+passport.serializeUser((user, done) => {
+  // __________
+  done(null, user.id);
+});
+
+passport.deserializeUser(async (id, done) => {
+  // __________
+  try {
+    let foundUser = await User.findById(id);
+    done(null, foundUser);
+  } catch (error) {
+    done(error);
+  }
+});
 
 app.get('/just_redirect', (req, res) => {
   res.redirect('http://localhost:8080/');
