@@ -108,6 +108,7 @@ passport.serializeUser((user, done) => {
   done(null, user.id);
 });
 
+// per our slack conversation, the below also needs the correct syntax to query your ORM user model
 passport.deserializeUser(async (id, done) => {
   // __________
   try {
